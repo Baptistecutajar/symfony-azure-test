@@ -1,0 +1,10 @@
+query Site($slug: String!, $preview: Boolean){
+  siteCollection(where: { siteSlug: $slug }, preview: $preview, limit: 1000) {
+    items {
+      sys {
+        id
+      }
+      locales
+    }
+  }
+}

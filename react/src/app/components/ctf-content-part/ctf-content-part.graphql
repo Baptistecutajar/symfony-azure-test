@@ -1,0 +1,7 @@
+fragment ContentPartFields on ContentPart {
+  __typename
+  sys {
+    id
+  }
+  title
+}
