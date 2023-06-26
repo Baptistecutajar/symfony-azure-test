@@ -10,7 +10,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Doctrine\ORM\EntityManagerInterface;
 
 #[AsCommand(
     name: 'TestCron',
@@ -19,25 +19,25 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class TestCronCommand extends Command
 {
 
-    private $container;
+    private $em;
 
-    public function __construct(ContainerInterface $container)
+    public function __construct(EntityManagerInterface $em)
     {
         parent::__construct();
-        $this->container = $container;
+        $this->em = $em;
     }
+
 
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $em = $this->container->get('doctrine')->getManager();
 
         $article = new Article();
         $article->setTitle("Title ".time());
         $article->setContent("Content ".time());
         sleep(600);
-        $em->persist($article);
-        $em->flush();
+        $this->em->persist($article);
+        $this->em->flush();
 
         return Command::SUCCESS;
     }
