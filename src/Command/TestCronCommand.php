@@ -37,7 +37,7 @@ class TestCronCommand extends Command
         $article->setContent("Content ".time());
         sleep(600);
         $em->persist($article);
-        $em->flush();
+        $em->flush(); 
 
         return Command::SUCCESS;
     }
